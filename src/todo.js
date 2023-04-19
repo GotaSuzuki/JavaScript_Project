@@ -1,14 +1,22 @@
 const onClickAdd = () => {
   const inputText = document.getElementById('add-text').value;
   document.getElementById('add-text').value = '';
-  
+
+  createIncompleteList(inputText);
+};
+
+const deleteFromIncompleteList = (target) => {
+  document.getElementById('incomplete-list').removeChild(target);
+}
+
+const createIncompleteList = (text) => {
   const li = document.createElement('li');
 
   const div = document.createElement('div');
   div.className = 'list-row';
 
   const p = document.createElement('p');
-  p.innerText = inputText;
+  p.innerText = text;
 
   const completeButton = document.createElement('button');
   completeButton.innerText = '完了';
@@ -28,6 +36,7 @@ const onClickAdd = () => {
       document.getElementById('complete-list').removeChild(deleteTarget);
 
       const text = deleteTarget.querySelector('.list-row p').innerText;
+      createIncompleteList(text);
     });
 
     addTarget.querySelector('.list-row').appendChild(p);
@@ -53,16 +62,12 @@ const onClickAdd = () => {
   deleteButton.addEventListener('click', () => {
     deleteFromIncompleteList(deleteButton.closest('li'));
   });
-  
+
   li.appendChild(div);
   div.appendChild(p);
   div.appendChild(completeButton);
   div.appendChild(deleteButton);
 
-  const deleteFromIncompleteList = (target) => {
-    document.getElementById('incomplete-list').removeChild(target);
-  }
-  
   document.getElementById('incomplete-list').appendChild(li);
 };
 
